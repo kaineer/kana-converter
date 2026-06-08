@@ -13,7 +13,7 @@ $ kana-converter sakana
 
 ## Related
 
- * :github: [select from output](https://github.com/kaineer/inchooz.ai)
+ * :octocat: [select from output](https://github.com/kaineer/inchooz.ai)
 
 ## TODO
 * plugin some kanji dictionaries
