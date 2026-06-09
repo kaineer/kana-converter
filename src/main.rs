@@ -26,6 +26,34 @@ impl Dictionary {
     }
 }
 
+/// Преобразование пунктуации (можно использовать отдельно)
+fn convert_punctuation(text: &str) -> String {
+    let mut result = String::with_capacity(text.len());
+
+    for c in text.chars() {
+        let converted = match c {
+            ',' => '、',
+            '.' => '。',
+            '(' => '（',
+            ')' => '）',
+            '[' => '［',
+            ']' => '］',
+            '{' => '｛',
+            '}' => '｝',
+            '!' => '！',
+            '?' => '？',
+            ';' => '；',
+            ':' => '：',
+            '"' => '＂',
+            '\'' => '＇',
+            _ => c,
+        };
+        result.push(converted);
+    }
+
+    result
+}
+
 fn main() -> anyhow::Result<()> {
     let args: Vec<String> = std::env::args().collect();
 
@@ -37,14 +65,16 @@ fn main() -> anyhow::Result<()> {
 
     let input = &args[1];
 
+    let input_with_punct = convert_punctuation(input);
+
     // Конвертируем ромадзи в хирагану
-    let hiragana = input.to_hiragana();
+    let hiragana = input_with_punct.to_hiragana();
 
     // Выводим первую строку: хирагана
     println!("{}", hiragana);
 
     // Выводим вторую строку: катакана
-    println!("{}", input.to_katakana());
+    println!("{}", input_with_punct.to_katakana());
 
     // Загружаем встроенный словарь и ищем кандзи по чтению
     match Dictionary::from_embedded() {
